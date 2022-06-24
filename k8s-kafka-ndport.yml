@@ -17,7 +17,7 @@ spec:
       port: 8080
       nodePort: 30201
 
-    - name: kafka-2181
+    - name: kafka-zookeeper-con
       protocol: TCP
       port: 2181
       nodePort: 30202
