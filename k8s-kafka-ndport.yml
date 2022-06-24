@@ -10,25 +10,25 @@ spec:
     - name: zookeeper-http
       protocol: TCP
       port: 9092
-      nodePort: 30100
+      nodePort: 30200
 
     - name: kafka-http
       protocol: TCP
       port: 8080
-      nodePort: 30011
+      nodePort: 30201
 
     - name: kafka-2181
       protocol: TCP
       port: 2181
-      nodePort: 30102
+      nodePort: 30202
 
     - name: kafka-2888
       protocol: TCP
       port: 2888
-      nodePort: 30013
+      nodePort: 30203
 
     - name: kafka-3888
       protocol: TCP
       port: 3888
-      nodePort: 30014
+      nodePort: 30204
 
