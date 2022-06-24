@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-kafka-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mts-kafka-pod
+      labels:
+        app: mts-kafka
+    spec:
+      containers:
+        - name: mts-kafka-ctn
+          image: bitnami/zookeeper
+          env:
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"
+
+        - name: mts-zookeeper-ctn
+          image: bitnami/kafka
+          env:
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: zookeeper-server:2181
+
+  selector:
+    matchLabels:
+      app: mts-kafka
