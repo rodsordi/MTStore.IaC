@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-zookeeper-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mts-zookeeper-pod
+      labels:
+        app: mts-zookeeper
+    spec:
+      containers:
+        - name: mts-zookeeper-ctn
+          image: bitnami/zookeeper
+          env:
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"
+          ports:
+            - containerPort: 2181
+          #volumeMounts:
+          #  - name: mts-zookeeper-vol
+          #    mountPath: /bitnami/zookeeper/data
+
+      volumes:
+        - name: mts-zookeeper-vol
+          hostPath:
+            type: Directory
+            path: /D/mt-volumes/zookeeper-data
+
+  selector:
+    matchLabels:
+      app: mts-zookeeper
