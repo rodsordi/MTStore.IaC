@@ -64,6 +64,13 @@ https://www.postman.com/rodsordi/workspace/mtstore
 ### TMP
 
 ```
+kubectl get pods
+kubectl exec -it mts-kafka-... -- bash
+cd opt/bitnami/kafka/
+./bin/kafka-topics.sh --bootstrap-server=localhost:30200 --list
+```
+
+```
 cd C:\kafka_2.13-3.1.0
 bin/windows/zookeeper-server-start.bat config/zookeeper.properties
 bin/windows/kafka-server-start.bat config/server.properties
