@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mts-zookeeper-cip
+  name: mts-zookeeper
 spec:
   type: ClusterIP
   selector:

@@ -25,7 +25,7 @@ spec:
       volumes:
         - name: mts-zookeeper-vol
           hostPath:
-            type: Directory
+            type: DirectoryOrCreate
             path: /D/mt-volumes/zookeeper-data
 
   selector:

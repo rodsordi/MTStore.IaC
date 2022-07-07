@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-influxdb-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mts-influxdb-pod
+      labels:
+        app: mts-influxdb
+    spec:
+      containers:
+        - name: mts-influxdb-ctn
+          image: influxdb:1.0
+          ports:
+            - containerPort: 8083
+            - containerPort: 8086
+            - containerPort: 25826
+          volumeMounts:
+            - name: mts-influxdb-vol
+              mountPath: /var/lib/influxdb
+
+      volumes:
+        - name: mts-influxdb-vol
+          hostPath:
+            type: DirectoryOrCreate
+            path: /D/mt-volumes/influxdb
+
+  selector:
+    matchLabels:
+      app: mts-influxdb

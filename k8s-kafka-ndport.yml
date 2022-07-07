@@ -9,4 +9,4 @@ spec:
   ports:
     - name: kafka
       port: 30200
-
+      nodePort: 30200

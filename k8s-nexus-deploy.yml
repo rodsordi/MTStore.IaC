@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-nexus-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mts-nexus-pod
+      labels:
+        app: mts-nexus
+    spec:
+      containers:
+        - name: mts-nexus-ctn
+          image: sonatype/nexus3
+          ports:
+            - containerPort: 8081
+            - containerPort: 8082
+            - containerPort: 8083
+          volumeMounts:
+            - name: mts-nexus-vol
+              mountPath: /nexus-data
+
+      volumes:
+        - name: mts-nexus-vol
+          hostPath:
+            type: DirectoryOrCreate
+            path: /D/mt-volumes/nexus
+
+  selector:
+    matchLabels:
+      app: mts-nexus

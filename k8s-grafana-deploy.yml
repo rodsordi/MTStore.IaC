@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mts-grafana-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mts-grafana-pod
+      labels:
+        app: mts-grafana
+    spec:
+      containers:
+        - name: mts-grafana-ctn
+          image: grafana/grafana
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: mts-grafana-vol
+              mountPath: /var/lib/grafana
+
+      volumes:
+        - name: mts-grafana-vol
+          hostPath:
+            type: DirectoryOrCreate
+            path: /D/mt-volumes/grafana
+
+  selector:
+    matchLabels:
+      app: mts-grafana
