@@ -24,8 +24,8 @@ spec:
               value: PLAINTEXT://localhost:30202
             - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
               value: "true"
-            - name: KAFKA_BROKER_ID
-              value: "2"
+            #- name: KAFKA_BROKER_ID
+            #  value: "2"
           ports:
             - containerPort: 30202
           volumeMounts:

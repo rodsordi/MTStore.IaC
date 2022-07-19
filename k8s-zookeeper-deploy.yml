@@ -18,9 +18,9 @@ spec:
               value: "yes"
           ports:
             - containerPort: 2181
-          #volumeMounts:
-          #  - name: mts-zookeeper-vol
-          #    mountPath: /bitnami/zookeeper/data
+          volumeMounts:
+            - name: mts-zookeeper-vol
+              mountPath: /bitnami/zookeeper/data
 
       volumes:
         - name: mts-zookeeper-vol
