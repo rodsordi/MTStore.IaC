@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mts-kafka-deploy
+  name: mts-kafka01-deploy
 spec:
-  replicas: 1
+  replicas: 3
   template:
     metadata:
-      name: mts-kafka-pod
+      name: mts-kafka01-pod
       labels:
-        app: mts-kafka
+        app: mts-kafka01
     spec:
       containers:
-        - name: mts-kafka-ctn
+        - name: mts-kafka01-ctn
           image: bitnami/kafka
           env:
             - name: ALLOW_PLAINTEXT_LISTENER
@@ -19,23 +19,23 @@ spec:
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: mts-zookeeper:2181
             - name: KAFKA_CFG_LISTENERS
-              value: PLAINTEXT://:30200
+              value: PLAINTEXT://:30201
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: PLAINTEXT://localhost:30200
+              value: PLAINTEXT://localhost:30201
             - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
               value: "true"
           ports:
-            - containerPort: 30200
-          #volumeMounts:
-          #  - name: mts-kafka-vol
-          #    mountPath: /bitnami/kafka/data
+            - containerPort: 30201
+          volumeMounts:
+            - name: mts-kafka01-vol
+              mountPath: /bitnami/kafka/data
 
       volumes:
-        - name: mts-kafka-vol
+        - name: mts-kafka01-vol
           hostPath:
             type: DirectoryOrCreate
-            path: /D/mt-volumes/kafka-data
+            path: /D/mt-volumes/kafka01-data
 
   selector:
     matchLabels:
-      app: mts-kafka
+      app: mts-kafka01

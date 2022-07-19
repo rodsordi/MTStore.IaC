@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mts-kafka
+  name: mts-kafka01
 spec:
   type: ClusterIP
   selector:
-    app: mts-kafka
+    app: mts-kafka01
   ports:
-    - name: kafka
-      port: 30200
+    - name: kafka01
+      port: 30201

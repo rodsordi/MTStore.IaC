@@ -9,6 +9,6 @@ spec:
   ports:
     - name: nexus
       port: 8081
-      nodePort: 30203
+      nodePort: 30211
 
 
