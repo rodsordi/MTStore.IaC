@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: my-ubuntu
+  name: my-ubuntu-set
 spec:
   replicas: 1
+  serviceName: "my-ubuntu-svc"
   template:
     metadata:
       name: my-ubuntu-pod
@@ -14,6 +15,18 @@ spec:
         - name: my-ubuntu-ctn
           image: my-ubuntu
           imagePullPolicy: Never
+          env:
+            - name: node.name
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: teste
+              value: "meu-teste"
+            - name: adv
+              valueFrom:
+                configMapKeyRef: 
+                  name: mts-kafka-config
+                  key: advertised.listener
   selector:
     matchLabels:
       app: my-ubuntu

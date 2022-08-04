@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mts-kafka-config
+data:
+  kafka_cfg_advertised_listener: PLAINTEXT://localhost:30200
+  

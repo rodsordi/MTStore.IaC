@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mts-kafka-set
+spec:
+  replicas: 1
+  minReadySeconds: 5 # by default is 0
+  serviceName: "mts-kafka"
+  template:
+    metadata:
+      name: mts-kafka-pod
+      labels:
+        app: mts-kafka
+    spec:
+      containers:
+        - name: mts-kafka0-ctn
+          image: bitnami/kafka
+          env:
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: mts-zookeeper:2181
+            - name: KAFKA_CFG_LISTENERS
+              value: PLAINTEXT://:30200
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: PLAINTEXT://localhost:30200
+            #- name: KAFKA_CFG_ADVERTISED_LISTENERS
+            #  valueFrom:
+            #    configMapKeyRef: 
+            #      name: mts-kafka-config
+            #      key: kafka_cfg_advertised_listener
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_CFG_BROKER_ID
+              value: "0"
+          ports:
+            - containerPort: 30200
+          #volumeMounts:
+          #  - name: mts-kafka01-logs-vol
+          #    mountPath: /bitnami/kafka/data
+
+        - name: mts-kafka1-ctn
+          image: bitnami/kafka
+          env:
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: mts-zookeeper:2181
+            - name: KAFKA_CFG_LISTENERS
+              value: PLAINTEXT://:30201
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: PLAINTEXT://localhost:30201
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_CFG_BROKER_ID
+              value: "1"
+          ports:
+            - containerPort: 30201
+
+        - name: mts-kafka2-ctn
+          image: bitnami/kafka
+          env:
+            - name: ALLOW_PLAINTEXT_LISTENER
+              value: "yes"
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: mts-zookeeper:2181
+            - name: KAFKA_CFG_LISTENERS
+              value: PLAINTEXT://:30202
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: PLAINTEXT://localhost:30202
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_CFG_BROKER_ID
+              value: "2"
+          ports:
+            - containerPort: 30202
+
+      volumes:
+        - name: mts-kafka-logs-vol
+          hostPath:
+            type: DirectoryOrCreate
+            path: /D/mt-volumes/kafka-data
+
+  selector:
+    matchLabels:
+      app: mts-kafka

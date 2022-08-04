@@ -64,10 +64,30 @@ https://www.postman.com/rodsordi/workspace/mtstore
 ### TMP
 
 ```
+cd C:\kafka_2.13-3.1.0
+
+Remove-Item ./data/zookeeper/* -Recurse -Force
+Remove-Item ./data/kafka01/* -Recurse -Force
+Remove-Item ./data/kafka02/* -Recurse -Force
+Remove-Item ./data/kafka03/* -Recurse -Force
+
+./bin/windows/zookeeper-server-start.bat ./config/zookeeper.properties
+
+./bin/windows/kafka-server-start.bat ./config01/server.properties
+./bin/windows/kafka-server-start.bat ./config02/server.properties
+./bin/windows/kafka-server-start.bat ./config03/server.properties
+
+./bin/windows/kafka-topics.bat --describe --bootstrap-server=localhost:9291
+./bin/windows/kafka-topics.bat --describe --bootstrap-server=localhost:9292
+./bin/windows/kafka-topics.bat --describe --bootstrap-server=localhost:9293
+```
+
+```
 kubectl get pods
 kubectl exec -it mts-kafka-... -- bash
 cd opt/bitnami/kafka/
-./bin/kafka-topics.sh --bootstrap-server=localhost:30200 --list
+./bin/kafka-topics.sh --bootstrap-server=localhost:30201 --list
+./bin/kafka-topics.sh --describe --bootstrap-server=localhost:30201
 ```
 
 ```
@@ -79,7 +99,7 @@ bin/windows/kafka-server-start.bat config/server.properties
 ```
 docker build -t my-ubuntu .
 kubectl apply -f my-ubuntu.yml
-kubectl exec -it my-ubuntu-57b8894f5-t2txw -- bash
+kubectl exec -it my-ubuntu-0 -- bash
 ```
 
 

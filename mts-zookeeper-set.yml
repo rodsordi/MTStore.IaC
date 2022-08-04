@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mts-zookeeper-deploy
+  name: mts-zookeeper-set
 spec:
   replicas: 1
+  serviceName: "mts-zookeeper"
   template:
     metadata:
       name: mts-zookeeper-pod
@@ -18,9 +19,9 @@ spec:
               value: "yes"
           ports:
             - containerPort: 2181
-          volumeMounts:
-            - name: mts-zookeeper-vol
-              mountPath: /bitnami/zookeeper/data
+          #volumeMounts:
+          #  - name: mts-zookeeper-vol
+          #    mountPath: /bitnami/zookeeper/data
 
       volumes:
         - name: mts-zookeeper-vol

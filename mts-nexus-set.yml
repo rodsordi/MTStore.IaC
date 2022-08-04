@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: mts-nexus-deploy
+  name: mts-nexus-set
 spec:
   replicas: 1
+  serviceName: "mts-nexus"
   template:
     metadata:
       name: mts-nexus-pod
